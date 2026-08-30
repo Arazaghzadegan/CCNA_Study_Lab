@@ -1,0 +1,60 @@
+In this chapter we are going to learn about Open Shortest Port First (OSPF)
+
+Note: DTE cable is only used for representing slow network so we can see how OSPF choose it's path
+
+
+For our connection between two routers we used DTE cable (add 2T module first)
+in PPP the network wont use MAC ADD it uses HDLC
+
+
+==========R1 config ====================
+en 
+conf t 
+hostname R1
+int g 0/0/0
+no sh
+ip add 192.168.1.1 255.255.255.0
+exit 
+ip route 192.168.2.0 255.255.255.0 100.100.100.2
+int se 0/1/0 
+no sh
+ip add 100.100.100.1 255.255.255.252
+exit 
+do wr
+==========R2 config ====================
+en 
+conf t 
+hostname R2
+int g 0/0/0
+no sh
+ip add 192.168.2.1 255.255.255.0
+exit 
+ip route 192.168.1.0 255.255.255.0 100.100.100.1
+int se 0/1/0 
+no sh
+ip add 100.100.100.2 255.255.255.252
+exit 
+do wr
+##########################################################
+Running OSPF on Both Routers
+
+=======R1 OSPF Setup======================
+en 
+conf t 
+router ospf 1                                    this number can be variable it's your choice
+router-id 1.1.1.1
+network 192.168.1.1 0.0.0.0 area 0               you can put 0.0.0.0 255.255.255.255 (this will bring all your interfaces to OSPF)
+network 100.100.100.1 0.0.0.0 area 0
+passive-interface default                        this will block all the hello packets 
+no passive interface s 0/10                      this will open sending hello packets (we don't want our LANs to receive Hello Packet)
+=======R2 OSPF Setup======================
+en 
+conf t 
+router ospf 1 
+router-id 2.2.2.2
+network 192.168.2.1 0.0.0.0 area 0
+network 100.100.100.2 0.0.0.0 area 0
+passive-interface default 
+no passive interface s 0/1/0
+============================================================
+** you can also go to specific interface and enable the OSPF but remember that the router-id will be set by default and you have to change it manually if needed.
