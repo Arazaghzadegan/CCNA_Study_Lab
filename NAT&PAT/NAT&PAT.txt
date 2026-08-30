@@ -1,0 +1,67 @@
+In this scenario we are going to learn about NAT & PAT Consider these two network as two different network.
+
+
+*** Don't forget to determine the inside & outside NAT
+
+======R Company 1 Config============
+en 
+conf t
+hostname C1
+int range g 0/0/0 - 1
+no sh
+exit
+int g 0/0/0
+ip add 10.10.10.1 255.255.255.0
+ip nat inside
+exit
+int g 0/0/1
+ip add 100.100.100.1 255.255.255.0
+ip nat outside
+exit
+ip route 0.0.0.0 0.0.0.0 100.100.100.2
+access-list 1 permit 10.10.10.0 0.0.0.255 => to use dynamic NAT you have to have Access list
+**ip nat inside source static 10.10.10.10 100.100.100.1 => For static Use This
+ip nat pool mynat 100.100.100.0 100.100.100.3 netmask 255.255.255.252 => assume that you bought IP range  
+*/* ip nat inside source list 1 pool mynat
+*/** ip nat inside source list 1 pool mynat overload (The "Overload" will Use PAT)
+
+======R SP Config=================
+en 
+conf t
+hostname SP
+int range g 0/0/0 - 1
+no sh
+exit
+int g 0/0/0 
+ip add 200.200.200.2 255.255.255.0
+exit
+int g 0/0/1
+ip add 100.100.100.2 255.255.255.0
+exit
+int loopback 1
+ip add 8.8.8.8 255.255.255.0
+======R C2 Config=================
+en 
+conf t
+hostname C2
+int range g 0/0/0 - 1
+no sh
+exit
+int g 0/0/0 
+ip add 10.10.10.1 255.255.255.0
+ip nat inside
+exit
+int g 0/0/1
+ip add 200.200.200.1 255.255.255.0
+ip nat outside
+exit
+ip route 0.0.0.0 0.0.0.0 200.200.200.2
+access-list 1 permit 10.10.10.0 0.0.0.255 (or type permit any)
+ip nat inside source list 1 interface g 0/0/1
+--ip nat inside source static tcp 10.10.10.11 443 200.200.200.1 443 => we want our site to be reachable from outside of this lan
+
+############################################################################################################################
+** this will NAT only one device i brought it here to show you static NAT.
+*/* the problem to this is that if you ran out of IP the other devices can't go outside. (this will be fixed on PAT). 
+-- if you changed the inside port (after 200.200.200.1) the users must enter the port at the end of IP on browser but if it was default it's not necessary.
+ 
