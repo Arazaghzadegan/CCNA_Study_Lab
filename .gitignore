@@ -1,0 +1,40 @@
+
+---
+
+# 3. `.gitignore`
+
+Create a file named `.gitignore`:
+
+```gitignore
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Windows
+$RECYCLE.BIN/
+*.lnk
+
+# Temporary Files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Secrets
+.env
+.env.*
+secrets/
+credentials/
+passwords/
+
+# Packet Tracer temporary files
+*.pkz
