@@ -1,0 +1,95 @@
+Before we start note that OSPF Talks on IP 224.0.0.5 they talk over this IP
+For DR they talk Over 224.0.0.6 
+In BR the router with biggest Router-ID will be selected as DR router and the other routers Only go to full state with this router For BDR the next Biggest router-ID will be selected as BDR. (The other routers connection will be only Two-Way)
+
+
+
+we are going to use this (100.100.100.0/24) range of IP but we don't want to have so many IP lost
+
+128 64 32 16 8 4 2 1 
+128 192 224 240 248 252 255
+01100100.01100100.01100100.00000 000 (100.100.100.0)
+11111111.11111111.11111111.11111 000 (255.255.255.248)
+
+we want only IP for 5 Routers so 2^n-2=5 ===> 2^3-2=6
+so we have IP in Range of :
+100.100.100.0/29
+
+.
+.
+.
+
+100.100.100.7/29
+we don't use the first IP and Last(For Net-Id & Broad cast  )
+
+Now lets config Our Routers:
+
+======= R1 Config ==========
+en 
+conf t 
+hostname R1
+int g 0/0
+no sh
+ip add 100.100.100.1 255.255.255.248
+ip ospf 1 area 0
+exit 
+int loopback 1
+ip add 1.1.1.1 255.255.255.248
+ip ospf 1 area 0
+ip ospf network point-to-point
+======= R2 Config ==========
+en 
+conf t 
+hostname R2
+int g 0/0/0
+no sh
+ip add 100.100.100.2 255.255.255.248
+ip ospf 1 area 0
+exit 
+int loopback 1
+ip add 2.2.2.2 255.255.255.248
+ip ospf 1 area 0
+ip ospf network point-to-point
+======= R3 Config ==========
+en 
+conf t 
+hostname R3
+int g 0/0/0
+no sh
+ip add 100.100.100.3 255.255.255.248
+ip ospf 1 area 0
+exit 
+int loopback 1
+ip add 3.3.3.3 255.255.255.248
+ip ospf 1 area 0
+ip ospf network point-to-point
+======= R4 Config ==========
+en 
+conf t 
+hostname R4
+int g 0/0/0
+no sh
+ip add 100.100.100.4 255.255.255.248
+ip ospf 1 area 0
+exit 
+int loopback 1
+ip add 4.4.4.4 255.255.255.248
+ip ospf 1 area 0
+ip ospf network point-to-point
+======= R5 Config ==========
+en 
+conf t 
+hostname R5
+int g 0/0/0
+no sh
+ip add 100.100.100.5 255.255.255.248
+ip ospf 1 area 0
+exit 
+int loopback 1
+ip add 5.5.5.5 255.255.255.248
+ip ospf 1 area 0
+ip ospf network point-to-point
+===============================================================
+Note that because you didn't configured all the routers at the same time you have to clear the OSPF connection so they become neighbor again and the Router you selected become DR and The Other to be BDR.(Router# (clear ip ospf process and then) change the router priority by using : interface GigabitEthernet(interface num) then :ip ospf priority <0-255>)
+# first change priority then clear 
+#schange the router priority above 1 and then the selected router after clearing will become DR
