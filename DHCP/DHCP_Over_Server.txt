@@ -1,0 +1,36 @@
+Int this scenario we are going to assign IP to our Devices over DHCP Server First lets take look at how DHCP Works
+
+
+
+Client                                                  DHCP-Server
+
+                     DHCP discover
+                    ==============>
+
+                       DHCP Offer
+                    <==============
+
+                     DHCP Request
+                   ==============>
+
+                    DHCP pack
+                   <==============
+
+
+	Dynamic Host Configuration Protocol (DHCP)
+
+
+# For better understanding of 4 step of DHCP after doing your configs turn on simulation then trace the packets.
+
+================R1 Configs====================
+en 
+conf t
+hostname R1
+int g 0/0/0 
+no sh
+ip add 192.168.1.1 255.255.255.0
+
+==========DHCP-Server========================
+* Remember to turn on service on DHCP section
+1.On your sever go to Desktop and assign DHCP IP
+2.Go to services -> DHCP -> set the IP and so on (hit save to be default pool)

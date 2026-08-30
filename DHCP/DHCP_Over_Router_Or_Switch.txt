@@ -1,0 +1,57 @@
+Int this chapter we are going to Use router or switch (Both will be config and use ) as DHCP Server. 
+
+##Using Router as DHCP##
+
+=======R1 Configs==========
+en 
+conf t
+hostname R1
+ip dhcp pool mydhcp 
+network 192.168.1.0 255.255.255.0          (In real life you can add /24 to the end or only the IP so it consider it as a classful )
+default-router 192.168.1.1 
+dns-server 8.8.8.8
+exit
+ip dhcp excluded-add 192.168.1.1 192.168.1.49          (we will tell DHCP to start assigning IP from .50) (You can add one IP too)
+exit
+int g 0/0/0
+no sh
+ip add 192.168.1.1 255.255.255.0
+exit 
+end
+show run | sec dhcp
+show ip dhcp bind
+
+##Using Switch L3 as DHCP
+
+======R1 Config==============
+en 
+conf t
+hostname R1
+int g 0/0/0
+no sh
+ip add 192.168.1.1 255.255.255.0
+
+======SW config==============
+en
+conf t
+int vlan 1
+no sh
+ip add 192.168.1.2 255.255.255.0
+exit
+ip dhcp pool mydhcp
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.1
+dns-server 8.8.8.8 
+exit
+ip dhcp excluded-add 192.168.1.1 192.168.1.49
+
+
+
+
+
+
+#############################################################################################
+
+** For Clearing all IP assigned to devices :
+	clear ip dhcp binding 
+

@@ -1,0 +1,87 @@
+In this scenario we are going to use VLANs and Previous lessons to assign IP to our devices.
+
+====SW1 Config==========
+en 
+conf t
+hostname SW1
+int g 0/1
+sw trunk encapsulation dot1q
+sw mod trunk
+exit 
+int ra fa 0/1 - 2
+sw mod acc
+sw acce vlan 10 
+exit
+int ra fa 0/3 - 4
+sw mod acc
+sw acce vlan 20 
+====R1 config===========
+en
+conf t
+hostname R1
+int g 0/0/0
+no sh
+exit
+int g 0/0/0.10
+enca dot1q 10
+ip add 192.168.10.1 255.255.255.0
+int g 0/0/0.20
+enca dot1q 20
+ip add 192.168.20.1 255.255.255.0
+exit
+ip dhcp pool dvlan10
+network 192.168.10.0 255.255.255.0
+default-router 192.168.10.1 
+exit
+ip dhcp pool dvlan20
+network 192.168.20.0 255.255.255.0
+default-router 192.168.20.1
+######################################################################################################################
+
+Using DHCP Server For assigning IP To Devices On VLANs
+We have to run Relay Agent on R1 so we can pass DHCP broadcast.
+
+====SW1 Config==========
+en 
+conf t
+hostname SW1
+int g 0/1
+sw trunk encapsulation dot1q
+sw mod trunk
+exit 
+int ra fa 0/1 - 2
+sw mod acc
+sw acce vlan 10 
+exit
+int ra fa 0/3 - 4
+sw mod acc
+sw acce vlan 20 
+====R1 config===========
+en
+conf t
+hostname R1
+int g 0/0/0
+no sh
+exit
+int g 0/0/0.10
+enca dot1q 10
+ip add 192.168.10.1 255.255.255.0
+ip helper-address 10.10.10.10
+int g 0/0/0.20
+enca dot1q 20
+ip add 192.168.20.1 255.255.255.0
+ip helper-address 10.10.10.10
+exit
+int g 0/0/1
+no sh 
+ip add 10.10.10.1 255.255.255.0
+exit 
+int g 0/0/1
+no sh 
+ip add 10.10.10.1 255.255.255.0
+
+======DHCP===========
+Set ip to DHCP
+GW 10.10.10.1 
+check dhcp config on packet tracer
+
