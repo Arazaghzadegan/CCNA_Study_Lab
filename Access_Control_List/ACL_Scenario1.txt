@@ -1,0 +1,30 @@
+# The main duty for Access List is to match the packets.(Matches the packets with commands and then we decide what to do with these packets).
+# One of other features of ACL is firewalling (thing we are about to learn on this chapter).
+
+
+#We will write an access list for this scenario that Restrict traffic internally using Router1 as follows:
+-Use access list number 100 (Extended)
+-Inside PC1 can only access the HTTP server 1 using HTTP on subnet 10.1.1.0/24
+-Inside PC2 can only access the HTTP server 2 using HTTPS on subnet 10.1.1.0/24
+-No other PCs or servers on subnet 10.1.2.0/24 can access subnet 10.1.1.0/24 (In All Access-lists there is a deny all but we will use this to see which traffic goes through)
+(Explicitly add this line. This is normally done to log the traffic with the word log, but PT does not support logging)
+-Hosts on subnet 10.1.2.0/24 can access any other network
+-Bind access list in the most efficient place on Router1
+
+2) Verification:
+
+-Verify that Inside PC1 can access the internal HTTP server 1 using HTTP only, but not ping HTTP server 2
+-Verify that Inside PC2 can access the internal HTTP server 2 using HTTPS, but not ping HTTP server 1
+-Verify that both inside PC1 and PC2 can browse to cisco.com and facebook.com.
+
+================R1 Config =================
+en
+conf t
+ip access-list extended 100 (You can name it too)
+permit tcp host 10.1.2.101 host 10.1.1.101 eq 80 (80 is the port number)
+permit tcp host 10.1.2.102 host 10.1.1.102 eq 443
+deny ip 10.1.2.0 0.0.0.255 10.1.1.0 0.0.0.255 (you can use log command at the end of this line so you can see which device is violate our terms)
+permit ip 10.1.2.0 0.0.0.255 any 
+exit
+int g 0/1 
+ip access-group 100 in
