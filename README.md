@@ -52,34 +52,49 @@ The labs in this repository were created using:
 
 ## 📂 Repository Structure
 
-├── Access-Control-List/
+Access-Control-List
 
-├── Area/
+Area
 
-├── Backup-and-Restore/
+Backup-and-Restore
 
-├── Configs-and-Name/
+Configs-and-Name
 
-├── DHCP/
+DHCP
 
-├── DR-and-BDR/
+DR-and-BDR
 
-├── Dynamic-Routing/
+Dynamic-Routing
 
-├── HSRP/
-├── IP/
-├── IP-Routing/
-├── IOS-Recovery/
-├── IPv6/
-├── Inter-VLAN-Routing/
-├── NAT-and-PAT/
-├── OSPF/
-├── Packet-Transfer/
-├── Password-Recovery/
-├── SNMP/
-├── STP/
-├── Syslogs/
-├── Telnet-and-SSH/
-├── Trunk/
-├── VLAN/
-└── VTP/
+HSRP
+
+IP
+
+IP-Routing
+
+IOS-Recovery
+
+IPv6
+
+Inter-VLAN-Routing
+
+NAT-and-PAT
+
+OSPF
+
+Packet-Transfer
+
+Password-Recovery
+
+SNMP
+
+STP
+
+Syslogs
+
+Telnet-and-SSH
+
+Trunk
+
+VLAN
+VTP
