@@ -1,0 +1,50 @@
+In This Scenario We are going to Have Static Route Over IPV6.
+**Read Introduction Before Using IPV6
+
+========R1 Configs===========
+en 
+conf t
+hostname R1
+ipv6 unicast-routing 
+int g 0/0/0
+no sh
+ipv6 address 2001:a:b:12::2/64
+exit
+ipv6 route ::/0 2001:a:b:12::1 ===>(" ::/0 " is equal to " 0.0.0.0 0.0.0.0 " in IPV4)
+
+========R2 Configs===========
+en 
+conf t
+hostname R2
+ipv6 unicast-routing 
+int g 0/0/0
+no sh
+ipv6 address 2001:a:b:12::1/64
+int g 0/0/1
+no sh
+ipv6 address 2001:a:b:23::1/64
+exit
+ipv6 route 2001:a:b:34::/64 2001:a:b:23::2
+========R3 Configs===========
+en 
+conf t
+hostname R3
+ipv6 unicast-routing 
+int g 0/0/0
+no sh
+ipv6 address 2001:a:b:34::2/64
+int g 0/0/1
+no sh
+ipv6 address 2001:a:b:23::2/64
+exit
+ipv6 route 2001:a:b:12::/64 2001:a:b:23::1
+========R4 Configs===========
+en 
+conf t
+hostname R4
+ipv6 unicast-routing 
+int g 0/0/0
+no sh
+ipv6 address 2001:a:b:34::1/64
+exit
+ipv6 route ::/0 2001:a:b:34::2

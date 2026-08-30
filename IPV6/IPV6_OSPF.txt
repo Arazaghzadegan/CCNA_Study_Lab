@@ -1,0 +1,76 @@
+In this Scenario We are going to use IPV6 OSPF
+
+============R1 Configs==============
+en 
+conf t
+hostname R1
+ipv6 unicast-routing 
+int g 0/0/0
+no sh
+ipv6 address 2001:a:b:12::2/64
+exit
+ipv6 router ospf 1 
+router-id 1.1.1.1
+exit
+int g 0/0/0
+ipv6 ospf 1 area 1
+do wr
+
+============R2 Configs==============
+en 
+conf t
+hostname R2
+ipv6 unicast-routing 
+int g 0/0/0
+no sh
+ipv6 address 2001:a:b:12::1/64
+int g 0/0/1
+no sh
+ipv6 address 2001:a:b:23::1/64
+exit
+ipv6  router ospf 1
+router-id 2.2.2.2
+exit 
+int g 0/0/0
+ipv6 ospf 1 area 1
+int g 0/0/1
+ipv6 ospf 1 area 0
+do wr
+
+============R3 Configs==============
+en 
+conf t
+hostname R3
+ipv6 unicast-routing 
+int g 0/0/0
+no sh
+ipv6 address 2001:a:b:34::2/64
+int g 0/0/1
+no sh
+ipv6 address 2001:a:b:23::2/64
+exit
+ipv6 router ospf 1 
+router-id 3.3.3.3
+exit
+int g 0/0/0
+ipv6 ospf 1 area 2
+int g 0/0/1
+ipv6 ospf 1 area 0
+do wr
+
+============R4 Configs==============
+en 
+conf t
+hostname R4
+ipv6 unicast-routing 
+int g 0/0/0
+no sh
+ipv6 address 2001:a:b:34::1/64
+exit
+ipv6 router ospf 1 
+router-id 4.4.4.4
+exit
+int g 0/0/0
+ipv6 ospf 1 area 2
+do wr
+
