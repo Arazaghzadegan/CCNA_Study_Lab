@@ -1,0 +1,105 @@
+*Before we start this chapter Note that Area 0 known as back bone.
+*The condition for being able to have multi area is that we "MUST" have at least one router interface on each side ex: one int on area 0 and one in area 10 (one in backbone on in target area) 
+* ASBR can be anywhere it doesn't matter if it's in backbone or other areas
+======R1 Configs============
+en 
+conf t
+hostname R1
+int g 0/0 
+no sh 
+ip add 10.10.12.1 255.255.255.248
+int g 0/1
+no sh
+ip add 10.10.14.1 255.255.255.248
+int g 0/2
+no sh
+ip add 10.10.13.1 255.255.255.248
+exit
+ip ospf 1 
+router-id 1.1.1.1
+network 10.0.0.0 0.255.255.255 area 0
+exit
+do wr
+======R2 Configs============
+en 
+conf t
+hostname R2
+int g 0/0 
+no sh 
+ip add 10.10.12.2 255.255.255.0
+int g 0/1
+no sh
+ip add 10.10.25.2 255.255.255.0
+exit
+router ospf 1
+router-id 2.2.2.2
+network 10.10.12.0 0.0.0.255 area 0 
+network 10.10.25.0 0.0.0.255 area 10
+do wr
+======R3 Configs============
+en 
+conf t
+hostname R3
+int g 0/0 
+no sh 
+ip add 10.10.13.2 255.255.255.0
+int g 0/1
+no sh
+ip add 10.10.35.2 255.255.255.0
+exit 
+router ospf 1
+router-id 3.3.3.3
+network 10.10.13.0 0.0.0.255 area 0
+network 10.10.35.0 0.0.0.255 area 20
+do wr
+======R4 Configs============
+en 
+conf t
+hostname R4
+int g 0/0 
+no sh 
+ip add 10.10.14.2 255.255.255.248
+exit
+router ospf 1 
+router-id 4.4.4.4 
+network 10.10.14.0 0.0.0.255 area 0
+do wr
+======R5 Configs============
+en 
+conf t
+hostname R5
+int g 0/0 
+no sh 
+ip add 10.10.25.1 255.255.255.248
+int loopback 1
+ip add 192.168.0.1 255.255.255.248
+ip ospf network point-to-point
+int loopback2
+ip add 192.168.1.1 255.255.255.248
+ip ospf network point-to-point
+int loopback3 
+ip add 192.168.2.1 255.255.255.248
+ip ospf network point-to-point
+int loopback 4
+ip add 192.168.3.1 255.255.255.248
+ip ospf network point-to-point
+exit
+router ospf 1
+router-id 5.5.5.5
+network 10.10.25.0 0.0.0.255 area 10
+do wr
+======R6 Configs============
+en 
+conf t
+hostname R6
+int g 0/0 
+no sh 
+ip add 10.10.35.1 255.255.255.248
+exit
+router ospf 1
+router-id 3.3.3.3
+network 10.10.35.0 0.0.0.255 area 20
+do wr
+#################################################################################
+
+If The OSPF didn't work check IP's and fix it then they will become neighbor 
