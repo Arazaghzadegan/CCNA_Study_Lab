@@ -46,9 +46,7 @@ The labs in this repository were created using:
 
 - Cisco Packet Tracer
 - Cisco IOS
-- Windows
-- Linux
-- Wireshark
+- GNS3
 
 ---
 
