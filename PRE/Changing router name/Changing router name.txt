@@ -1,0 +1,23 @@
+in Conf mode : 
+
+hostname (enter your desire name )
+
+
+
+
+=====================================================================================================
+Quick access : 
+
+
+en 
+conft 
+hostname (set name )
+
+
+
+
+********************************************************************************************************************
+
+Remember to save your changes because after reboot all your changes will be discarded for doing this 
+ 
+go back to global mode hit "wr" or copy running-config startup-config

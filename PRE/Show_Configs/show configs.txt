@@ -1,0 +1,6 @@
+in global mode :
+
+For seeing settings that has been saved on ram (these will be loaded form hard to ram for policies and ...) ====> show running-config 
+
+For seeing settings on nvram ======> show startup-config 
+

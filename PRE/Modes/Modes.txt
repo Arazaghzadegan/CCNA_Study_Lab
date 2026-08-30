@@ -1,0 +1,17 @@
+Commands and description 
+
+
+by entering "?" you can get help on each mode 
+
+">" This mode is user mode 
+"#" This mode is global mode ======> for entering this mode you should enter "enable or en in short "
+(config)# This is global config mode =====> for entering this mode you should enter "configuration terminal or conf t in short"
+
+
+
+====================================================================================================================================
+you can copy text below and paste it on cisco cli to enter config mode only by one click 
+
+en
+conf t 
+          
