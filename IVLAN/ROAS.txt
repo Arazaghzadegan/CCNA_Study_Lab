@@ -1,0 +1,56 @@
+Now that we have learned about VLANs it's time to connect VLANs together.
+since the router won't understand VLANs encapsulation we have to create virtual interface on real interface.(This method called ROAS(Router on Stick )).
+
+========SW1 Configs============
+en 
+conf t
+hostname SW1
+int fa 0/1
+sw access vlan 10
+int fa 0/2
+sw access vlan 20
+int g 0/1
+sw mod trunk
+
+========SW2 Configs============
+en 
+conf t
+hostname SW2
+int fa 0/1
+sw access vlan 10
+int fa 0/2
+sw access vlan 20
+int g 0/1
+sw mode trunk
+
+========SW3 Configs=============
+en 
+conf t
+hostname SW3
+int g 1/0/1
+sw mode trunk
+int g 1/0/2
+sw mode trunk
+exit
+vlan 10
+vlan 20
+
+========Router Configs=============
+en 
+conf t
+hostname R1
+int g 0/0/0
+no sh
+exit
+int g 0/0/0.10
+encap dot1q 10
+ip add 192.168.10.1 255.255.255.0
+exit
+int g 0/0/0.20
+encap dot1q 20
+ip add 192.168.20.1 255.255.255.0
+
+
+
+
+** Note that if you have changed native VLAN you should tell the router that its been changed (After entering interface > encapsulation dot1Q (Native VLAN num) native)

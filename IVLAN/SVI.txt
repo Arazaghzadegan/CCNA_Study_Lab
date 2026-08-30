@@ -1,0 +1,48 @@
+In an other scenario we are going to learn about SVI 
+
+========SW1 Configs============
+en 
+conf t
+hostname SW1
+int fa 0/1
+sw access vlan 10
+int fa 0/2
+sw access vlan 20
+int g 0/1
+sw mod trunk
+
+========SW2 Configs============
+en 
+conf t
+hostname SW2
+int fa 0/1
+sw access vlan 10
+int fa 0/2
+sw access vlan 20
+int g 0/1
+sw mode trunk
+
+========SW3 Configs=============
+en 
+conf t
+hostname SW3
+int ra gi 1/01 - 2
+sw mode trunk 
+vlan 10
+exit
+int vlan 10
+ip add 192.168.10.1 255.255.255.0
+exit
+vlan 20
+exit
+int vlan 20 
+ip add 192.168.20.1 255.255.255.0
+exit
+ip routing ===========> if we don't have routing table this command will learn the pass 
+end
+show ip route
+
+####################################################################################################
+If you want to have Switch to act as layer 3 you should tell it to stop acting as a layer 2 :
+on your interface :
+no switchport   ====> now you can add IP to that interface and it will act as layer 3 
