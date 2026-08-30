@@ -1,0 +1,64 @@
+****************************************************************************
+*                                                                          *
+* IN this scenario we are going to route our branches to internet through  *
+* Routing them to HQ router and then to ISP                                *
+* then I'm going to load balance between R1 & R2                           *
+*                                                                          *
+****************************************************************************
+
+===========HQ to ISP===============
+en 
+conf t
+int g 0/2
+no sh
+ip add 100.100.100.1 255.255.255.0
+end
+wr
+
+=========ISP======================
+en 
+conf t
+hostname ISP
+exit
+int g 0/0/0
+no sh
+ip add 100.100.100.2 255.255.255.0
+end 
+wr
+
+========R1 to R2 for balance======
+en 
+conf t
+int g 0/1
+no sh
+ip add 170.170.170.1 255.255.255.0
+end
+wr
+
+=======R2 to R1 for balance=======
+en 
+conf t 
+no sh
+int g 0/1
+ip add 175.175.175.2 255.255.255.0
+end
+wr
+
+========= route 2 for each line==============
+On R1 :ip route 10.10.30.0 255.255.255.0 170.170.170.1 2
+ON R2 :ip route 10.10.40.0 255.255.255.0 170.170.170.2 2
+on HQ: 
+ip route 10.10.30.0 255.255.255.0 200.200.200.2 2
+ip route 10.10.40.0 255.255.255.0 150.150.150.2 2
+
+*********************************************************************************************************************************************
+*                                                                                                                                           *
+* Note that if you want to tell the routers to use this route as a backup you have to put "2" at the end of command :                       *
+*                                                                                                                                           *
+* IP route x.x.x.x x.x.x.x x.x.x.x 2======> this 2 means that if the first route fails use this                                             *
+* # Remember all your routers should know that if this line failed pass the data to the specific IP                                         *
+* in our scenario  if we want to reach 10.10.30.10 and the default route fails it uses the back up route(170.170.170.2)                     *
+*                                                                                                                                           *
+*#On Static routing neighbors don't know about there neighbors status so you may get into loop which we will fix on Dynamic routing         *
+*                                                                                                                                           *
+*********************************************************************************************************************************************
