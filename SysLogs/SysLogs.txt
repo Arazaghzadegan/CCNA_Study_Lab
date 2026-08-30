@@ -1,0 +1,54 @@
+# Cisco Logs by default save on RAM.
+# In this Scenario We are Going to Run Syslog Server.
+# SysLogs Has 8 ( 0-7 ) LVL's:
+
+	Value    Severity       Description
+
+	0        Emergency      System is unusable. A panic condition.
+
+	1        Alert          A condition that should be corrected immediately, such as a
+                       		corrupted system database.
+
+	2        Critical       Critical conditions, such as hard device errors.
+
+	3        Error          Error conditions.
+
+	4        Warning        Warning conditions.
+
+	5        Notice         Normal but significant conditions. Not errors, but may
+                        	require special handling.
+
+	6        Informational  Informational messages.
+
+	7        Debug          Messages that contain information normally of use only
+                        when debugging a program.
+
+=============== R1 Configs ==========
+en
+conf t
+hostname R1
+ip domain-name test.local 
+username admin secret 123456
+enable secret 123
+crypto key generate rsa modules 1024 (On PT: crypto key generate rsa general-keys modulus 1024)
+ssh version 2
+line vty 0 4  
+login local 
+loggin synchronous
+exit
+terminal monitor
+transport input ssh 
+transport output non 
+logging 10.10.10.11
+loggin trap 7 (the number says that from this LVL to next i want to see it's log )
+int g 0/0/0
+no sh 
+ip add 10.10.10.1 255.255.255.0
+loggin synchronous
+
+
+======== Syslog Server Configs ===================
+ip add 10.10.10.11
+############################################################################################################################################################################################
+
+* Note that on SSH & Telnet on console you wont see any logs so you have to enable it for yourself.
