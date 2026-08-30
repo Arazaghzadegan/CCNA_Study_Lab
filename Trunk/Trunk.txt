@@ -1,0 +1,45 @@
+In this scenario we are about to learn trunk 
+
+
+=====Sw1 Configs==========
+en 
+conf t 
+hostname SW1
+int range fa 0/1 - 2
+switchport access vlan 10
+exit
+int range fa 0/3 - 4
+switchport access vlan 20
+exit
+int range fa 0/5 - 6
+switchport access vlan 30
+exit
+end 
+show vlan br
+write=====Sw2 Configs==========
+en 
+conf t 
+hostname SW2
+int range fa 0/1 - 2
+switchport access vlan 10
+exit
+int range fa 0/3 - 4
+switchport access vlan 20
+exit
+int range fa 0/5 - 6
+switchport access vlan 30
+exit
+end 
+write
+show vlan br
+################################################################
+on some Switches you may encounter an error about trunk for this before you enter the command for trunk you should enter :
+switchport trunk encapsulation dot1q
+then enter trunk command.
+
+
+
+# on switches the packets without VLAN tag is known as default vlan so for security change the native vlan to your desire vlan number by : 
+ (on the interface that the trunk is on enter) switchport trunk native vlan (your desire number).
+
+* remember that on both switch the trunk port must be the same 
