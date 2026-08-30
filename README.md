@@ -52,24 +52,27 @@ The labs in this repository were created using:
 
 ## 📂 Repository Structure
 
-```text
-ccna-labs/
-│
-├── 01-network-fundamentals/
-├── 02-switching/
-├── 03-vlan/
-├── 04-inter-vlan-routing/
-├── 05-routing/
-├── 06-static-routing/
-├── 07-rip/
-├── 08-ospf/
-├── 09-eigrp/
-├── 10-dhcp/
-├── 11-nat/
-├── 12-acl/
-├── 13-cdp-lldp/
-├── 14-stp/
-├── 15-etherchannel/
-├── 16-ipv6/
-├── 17-security/
-└── images/
+├── Access-Control-List/
+├── Area/
+├── Backup-and-Restore/
+├── Configs-and-Name/
+├── DHCP/
+├── DR-and-BDR/
+├── Dynamic-Routing/
+├── HSRP/
+├── IP/
+├── IP-Routing/
+├── IOS-Recovery/
+├── IPv6/
+├── Inter-VLAN-Routing/
+├── NAT-and-PAT/
+├── OSPF/
+├── Packet-Transfer/
+├── Password-Recovery/
+├── SNMP/
+├── STP/
+├── Syslogs/
+├── Telnet-and-SSH/
+├── Trunk/
+├── VLAN/
+└── VTP/
