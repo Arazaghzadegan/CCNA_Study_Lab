@@ -1,0 +1,88 @@
+In previous episode we did all the things manually so in this chapter we are going to make this process auto.
+** the condition for running VTP is that your port must be trunk.
+** VTP has three versions but in PT we only have Two versions.
+** VTP by default is active but we have to enable it manually (check status by show vtp status).
+** VTP modes: Server (default), Client, Transparent.
+** On client mode, it can only write the changes it can't modify it, on server mode it can do anything, on transparent it wont get updates and wont update others.
+** On version 3 you can turn off VTP on all devices or specific device.
+** On version 1,2 you can have multiple servers.
+#  copy trunk command and hostname from previous chapter (this commands is only for making it auto).
+=====SW13 Configs=============
+en 
+conf t 
+vtp mode server
+vtp domain test.local ===> this line is only for sever mode.
+vtp version 2 (on real life put it on version 3).
+
+====SW9 configs===============
+en
+conf t 
+vtp version 2
+
+====SW10 configs===============
+en 
+conf t 
+vtp version 2
+
+====SW11 configs===============
+en
+ conf t 
+vtp version 2
+
+====SW12 configs===============
+en 
+conf t 
+vtp version 2
+
+====SW1 configs===============
+en 
+conf t 
+vtp mode client
+vtp version 2
+
+====SW2 configs===============
+en 
+conf t 
+vtp mode client
+vtp version 2
+
+====SW3 configs===============
+en 
+conf t 
+vtp mode client
+vtp version 2
+
+====SW4 configs===============
+en 
+conf t 
+vtp mode client
+vtp version 2
+
+====SW5 configs===============
+en 
+conf t 
+vtp mode client
+vtp version 2
+
+====SW6 configs===============
+en 
+conf t 
+vtp mode transparent
+vtp version 2
+
+====SW7 configs===============
+en 
+conf t 
+vtp mode client
+vtp version 2
+
+====SW8 configs===============
+en 
+conf t 
+vtp mode client
+vtp version 2
+
+################################################################################################################################
+
+** by changing anything from servers Reversion number will change and the change will be advertised to others.
+
