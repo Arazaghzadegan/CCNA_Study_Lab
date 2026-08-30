@@ -53,12 +53,19 @@ The labs in this repository were created using:
 ## 📂 Repository Structure
 
 ├── Access-Control-List/
+
 ├── Area/
+
 ├── Backup-and-Restore/
+
 ├── Configs-and-Name/
+
 ├── DHCP/
+
 ├── DR-and-BDR/
+
 ├── Dynamic-Routing/
+
 ├── HSRP/
 ├── IP/
 ├── IP-Routing/
