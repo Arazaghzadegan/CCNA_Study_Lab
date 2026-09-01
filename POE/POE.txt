@@ -1,0 +1,15 @@
+#In this scenario we are going to learn about Power Over Ethernet (POE)
+
+
+
+
+====== SW1 Configs===============
+to see what device uses POE:
+show power inliner
+
+To manage POE :
+
+en 
+conf t
+int fa 0/1
+power inline auto/never ====> ( Auto mode negotiate between device and switch )
